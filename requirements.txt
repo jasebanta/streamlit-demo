@@ -2,4 +2,3 @@ streamlit
 snowflake-snowpark-python[pandas]
 fastapi
 uvicorn[standard]
-nohub
