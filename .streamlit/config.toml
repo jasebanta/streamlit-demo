@@ -184,7 +184,7 @@ runOnSave = false
 # If set, the server will only be accessible from this address, and not from
 # any aliases (like localhost).
 # Default: (unset)
-address =
+#address =
 
 # The port where the server will listen for browser connections.
 # Don't use port 3000 which is reserved for internal development.
@@ -193,7 +193,7 @@ port = 80
 
 # The base path for the URL where Streamlit should be served from.
 # Default: ""
-baseUrlPath = ""
+#baseUrlPath = ""
 
 # Enables support for Cross-Origin Resource Sharing (CORS) protection, for
 # added security.
