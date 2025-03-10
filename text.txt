@@ -1,0 +1,11 @@
+"person_id": ["Value", "Masked"], 
+"allergy": ["Value", "Masked"], 
+"substance_abuse": ["Value", "Masked"], 
+"blood_pressure": ["Value", "Masked"], 
+"cholesterol": ["Value", "Masked"], 
+"heart_disease": ["Value", "Masked"], 
+"diabetes": ["Value", "Masked"], 
+"bmi": ["Value", "Masked"], 
+"smoker": ["Value", "Masked"], 
+"exercise_freq": ["Value", "Masked"], 
+"sleep_hours": ["Value", "Masked"]

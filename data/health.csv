@@ -1,0 +1,11 @@
+﻿,person_id,allergy,substance_abuse,blood_pressure,cholesterol,heart_disease,diabetes,bmi,smoker,exercise_freq,sleep_hours
+0,37bb3eec-4bf5-4b52-b09d-258c27a0c3d7,,,High,Low,,None,25.7,,Daily,5
+1,91d63f78-e3e9-4e99-b10c-718b1eb0e38a,,Cannabis,Low,Normal,,,22.3,No,Daily,4
+2,902059e4-ff9a-45c2-9f04-4aed75523327,Dairy,,Normal,Normal,,Type 1,27,,,5
+3,9ad620ab-4821-4ddb-85b8-9cd927cb6f2a,,None,,,,Type 2,31.4,,Weekly,4
+4,951f58d0-5e84-4058-95a8-04eb093923de,Gluten,,Low,,,,32.8,Yes,Daily,4
+5,b386f7a4-c991-403f-a8c1-3091444d610b,,,Normal,High,No,Type 2,27.3,No,,5
+6,09cb3942-43f5-4a85-bbc9-f87af668a617,,,High,Normal,,,20.1,Yes,Daily,10
+7,b841d0a0-1fe7-41d6-9917-8793a9d3c2e6,,,,,,Type 2,32.8,Yes,Weekly,7
+8,acf5e81e-7131-4269-b118-e36477097749,Peanuts,,Low,,,,30,,Weekly,5
+9,7e8f8095-624c-49b6-b244-45a7b7e58481,,,Normal,,,Type 1,30.8,Yes,Daily,8

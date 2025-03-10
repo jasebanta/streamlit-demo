@@ -1,16 +1,170 @@
 import streamlit as st
-import requests
+import pandas as pd
+import numpy as np
 
-st.title("Kynisca Innovation Center")
 
-st.divider()
+from backend.data import SampleData
 
-pp = """Privacy Policy
-Version 0.0.1 \n
-April 17, 2024 \n
-\n
-This Application by Kynisca International, LTD (“Kynisca”) is still under development. Information collected by the Application or company will be used solely for development purposes and will not carry over for any commercial purpose. The information provided to us will be available internally to Kynisca employees and any contracted individuals and companies (“Contractors”) working with Kynisca on the development of the Application. Users who choose to share their information with Kynisca during the development phase will not have any data shared publicly but should otherwise have no expectations of privacy. Upon completion of development, all personal information including personally identifiable information (“PII”), personal health information (“PHI”), and data history will be permanently deleted and no backup copy shall be retained.
-None of the data collected during the development phase of the Application will be sold, leased, shared, posted, or otherwise made available to any individual or organization outside of Kynisca and our Contractors.
-Kynisca reserves the right to modify our Privacy Policy at any time. Upon completion of the development of the Application, a new Privacy Policy will be posted and this one will no longer be valid. If at any time, the user (“You”) disagrees with the policy, you should stop using the Application. User data will be deleted upon the completion or termination of the development phase of the Application."
-"""
-st.write(pp)
+st.title("Consent Management Visual")
+
+st.divider() #--------------------------------------------
+@st.cache_data
+def generate_synthetic_data():
+    sd = SampleData(10)
+    df_demo = sd.df_demo
+    df_health = sd.df_health
+    return (df_demo, df_health)
+
+st.write("Synthetic Demogrpahic Data")
+df_demo, df_health = generate_synthetic_data()
+st.data_editor(df_demo)
+
+st.write("Synthetic Health Data")
+st.dataframe(df_health)
+
+st.divider() #--------------------------------------------
+
+st.header("Organizational Consent")
+
+# Define categories and items with their pill options
+categories = {
+    "Demographic Data": {
+        "person_id": ["Value", "Masked"],
+        "first_name": ["Value", "Masked"],
+        "last_name": ["Value", "Masked"],
+        "dob": ["Value", "Masked"],
+        "ssn": ["Value", "Masked"],
+        "gender": ["Value", "Masked"],
+        "ethnicity": ["Value", "Masked"],
+        "phone": ["Value", "Masked"],
+        "email": ["Value", "Masked"],
+        "record_created_dt": ["Value", "Masked"],
+        "consent": ["Value", "Masked"]
+    },
+    "Health Data": {
+        "person_id": ["Value", "Masked"], 
+        "allergy": ["Value", "Masked"], 
+        "substance_abuse": ["Value", "Masked"], 
+        "blood_pressure": ["Value", "Masked"], 
+        "cholesterol": ["Value", "Masked"], 
+        "heart_disease": ["Value", "Masked"], 
+        "diabetes": ["Value", "Masked"], 
+        "bmi": ["Value", "Masked"], 
+        "smoker": ["Value", "Masked"], 
+        "exercise_freq": ["Value", "Masked"], 
+        "sleep_hours": ["Value", "Masked"]
+    }
+}
+
+# Initialize session state for each category
+for category, items in categories.items():
+    if f"selected_{category}" not in st.session_state:
+        st.session_state[f"selected_{category}"] = {item: False for item in items}
+    if f"select_all_{category}" not in st.session_state:
+        st.session_state[f"select_all_{category}"] = False
+    if f"pills_{category}" not in st.session_state:
+        st.session_state[f"pills_{category}"] = {item: [] for item in items}
+
+# Callback to handle "Select All" toggle
+def toggle_select_all(category):
+    all_selected = not st.session_state[f"select_all_{category}"]
+    st.session_state[f"select_all_{category}"] = all_selected
+    for item in categories[category]:
+        st.session_state[f"selected_{category}"][item] = all_selected
+
+st.write("### Select Items from Categories")
+
+for category, items in categories.items():
+    with st.expander(category, expanded=False):
+        # "Select All" checkbox
+        select_all = st.checkbox(
+            f"Select All {category}",
+            value=st.session_state[f"select_all_{category}"],
+            key=f"select_all_checkbox_{category}",
+            on_change=toggle_select_all,
+            args=(category,)
+        )
+
+        # Individual item checkboxes with pills appearing immediately
+        for item in items:
+            cols = st.columns([0.3, 0.7])  # Indent the pills
+            with cols[0]:  # Checkbox column
+                st.session_state[f"selected_{category}"][item] = st.checkbox(
+                    item,
+                    value=st.session_state[f"selected_{category}"][item],
+                    key=f"{category}_{item}"
+                )
+            if st.session_state[f"selected_{category}"][item]:  # Show pills only if selected
+                with cols[1]:  # Indented pills column
+                    first_value = categories[category][item][0]
+                    current_selection = st.session_state[f"pills_{category}"].get(item, [])
+                    if not current_selection:
+                        current_selection = [first_value]
+                    st.session_state[f"pills_{category}"][item] = st.pills(
+                        label=f"Select {item} types",
+                        options=categories[category][item],
+                        selection_mode="single",
+                        default=st.session_state[f"pills_{category}"][item],
+                        key=f"pills_{category}_{item}"
+                    )
+
+# Display selected items
+selected_items = {
+    category: {
+        item: st.session_state[f"pills_{category}"].get(item, [])
+        for item, selected in st.session_state[f"selected_{category}"].items() if selected
+    }
+    for category in categories
+}
+
+st.divider() #--------------------------------------------
+st.header("Consent Storage")
+
+# Show selected items
+st.write("Organization consent values to be stored in a NoSQL db using key-value and document data model.")
+st.json(selected_items)
+st.divider() #--------------------------------------------
+st.header("End User View")
+
+# Filtered DataFrame for End User View
+def filter_and_mask_data(df, category_name):
+    """Filters dataframe to include only selected fields and applies masking if needed."""
+    selected_fields = selected_items.get(category_name, {})
+
+    if not selected_fields:  # If nothing was selected, return an empty DataFrame with same columns
+        return pd.DataFrame(columns=df.columns)
+
+    filtered_df = df.copy()
+
+    for col in df.columns:
+        if col in selected_fields:
+            # Check if the column should be masked
+            if "Masked" in selected_fields[col]:
+                filtered_df[col] = "######"  # Mask values
+        else:
+            filtered_df.drop(columns=[col], inplace=True)  # Drop unselected columns
+
+    return filtered_df
+
+
+# Apply the filtering and masking for demographic data
+df_demo_filtered = filter_and_mask_data(df_demo, "Demographic Data")
+
+# Ensure only rows where 'consent' == True in df_demo
+if "consent" in df_demo.columns:
+    df_demo_filtered = df_demo_filtered[df_demo["consent"] == True]
+
+# Apply filtering for health data, linking with person_id from df_demo
+df_health_filtered = filter_and_mask_data(df_health, "Health Data")
+
+if not df_demo_filtered.empty and "person_id" in df_health_filtered.columns:
+    df_health_filtered = df_health_filtered[df_health_filtered["person_id"].isin(df_demo_filtered["person_id"])]
+else:
+    df_health_filtered = pd.DataFrame(columns=df_health.columns)  # Empty DataFrame with correct columns if no consent
+
+# Display the transformed views
+st.write("### Filtered Demographic Data (End User View)")
+st.dataframe(df_demo_filtered)
+
+st.write("### Filtered Health Data (End User View)")
+st.dataframe(df_health_filtered)

@@ -1,0 +1,11 @@
+﻿,person_id,first_name,last_name,dob,ssn,gender,ethnicity,phone,email,record_created_dt,consent
+0,37bb3eec-4bf5-4b52-b09d-258c27a0c3d7,Tanya,Riley,1981-01-30,063-96-5139,Non-binary,Other,3094788208,larsonemma@example.org,2023-06-08 11:41:14,true
+1,91d63f78-e3e9-4e99-b10c-718b1eb0e38a,John,Wheeler,1986-05-02,084-54-9563,Male,Hispanic,001-485-643-5346,wstewart@example.org,2020-01-29 22:36:39,true
+2,902059e4-ff9a-45c2-9f04-4aed75523327,Wendy,Jones,1958-09-09,519-34-2171,Female,Hispanic,(613)354-2784x980,josephpreston@example.net,2024-09-14 19:20:41,true
+3,9ad620ab-4821-4ddb-85b8-9cd927cb6f2a,Jason,Cooper,1990-12-20,650-34-8281,Male,Other,840.216.4005x2427,jonesnicole@example.org,2024-08-22 02:09:39,false
+4,951f58d0-5e84-4058-95a8-04eb093923de,Angela,Jordan,1947-01-12,316-47-0654,Other,White,(833)215-8692x322,jillcook@example.com,2022-02-10 00:41:26,true
+5,b386f7a4-c991-403f-a8c1-3091444d610b,Daniel,Brennan,2002-08-12,482-29-3270,Non-binary,Hispanic,754.833.0365x414,sheila14@example.org,2024-12-08 19:54:29,true
+6,09cb3942-43f5-4a85-bbc9-f87af668a617,Daniel,Hamilton,1993-10-06,806-41-7150,Male,Black,+1-581-769-3406x088,qjones@example.com,2022-09-02 07:14:48,true
+7,b841d0a0-1fe7-41d6-9917-8793a9d3c2e6,Rachel,Hunter,1989-07-26,419-42-6593,Male,Asian,001-248-623-6629x946,jason99@example.net,2022-09-28 04:38:39,true
+8,acf5e81e-7131-4269-b118-e36477097749,Jason,Kennedy,2005-07-05,816-95-2781,Female,Black,+1-514-989-5134x33200,gibsonolivia@example.net,2021-08-27 02:08:30,false
+9,7e8f8095-624c-49b6-b244-45a7b7e58481,Reginald,Hernandez,1990-12-23,006-97-1747,Female,Hispanic,001-763-928-7083x17278,jrivas@example.com,2021-05-09 11:40:24,false
