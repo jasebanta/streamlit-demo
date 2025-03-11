@@ -3,6 +3,14 @@ import pandas as pd
 import numpy as np
 
 
+import sys
+import os
+
+# Get the parent directory of the current script (streamlit_app.py)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+# Add the parent directory to the Python path
+sys.path.append(parent_dir)
 from backend.data import SampleData
 
 st.set_page_config(
