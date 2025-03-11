@@ -5,6 +5,9 @@ import numpy as np
 
 from backend.data import SampleData
 
+st.set_page_config(
+    layout="wide"
+)
 st.title("Consent Management Visual")
 
 st.divider() #--------------------------------------------
@@ -17,7 +20,7 @@ def generate_synthetic_data():
 
 st.write("Synthetic Demogrpahic Data")
 df_demo, df_health = generate_synthetic_data()
-st.data_editor(df_demo)
+edited_demo = st.data_editor(df_demo)
 
 st.write("Synthetic Health Data")
 st.dataframe(df_health)
@@ -56,6 +59,8 @@ categories = {
     }
 }
 
+partners = ["partner 1", "partner 2", "partner 3"]
+
 # Initialize session state for each category
 for category, items in categories.items():
     if f"selected_{category}" not in st.session_state:
@@ -64,6 +69,8 @@ for category, items in categories.items():
         st.session_state[f"select_all_{category}"] = False
     if f"pills_{category}" not in st.session_state:
         st.session_state[f"pills_{category}"] = {item: [] for item in items}
+    if f"multi_{category}" not in st.session_state:
+        st.session_state[f"multi_{category}"] = {item: [] for item in items}
 
 # Callback to handle "Select All" toggle
 def toggle_select_all(category):
@@ -87,7 +94,7 @@ for category, items in categories.items():
 
         # Individual item checkboxes with pills appearing immediately
         for item in items:
-            cols = st.columns([0.3, 0.7])  # Indent the pills
+            cols = st.columns([0.2, 0.2, 0.6])  # Indent the pills
             with cols[0]:  # Checkbox column
                 st.session_state[f"selected_{category}"][item] = st.checkbox(
                     item,
@@ -96,26 +103,33 @@ for category, items in categories.items():
                 )
             if st.session_state[f"selected_{category}"][item]:  # Show pills only if selected
                 with cols[1]:  # Indented pills column
-                    first_value = categories[category][item][0]
-                    current_selection = st.session_state[f"pills_{category}"].get(item, [])
-                    if not current_selection:
-                        current_selection = [first_value]
                     st.session_state[f"pills_{category}"][item] = st.pills(
                         label=f"Select {item} types",
                         options=categories[category][item],
                         selection_mode="single",
-                        default=st.session_state[f"pills_{category}"][item],
+                        default=categories[category][item][0],
                         key=f"pills_{category}_{item}"
                     )
+                    with cols[2]:
+                        st.session_state[f"multi_{category}"][item] = st.multiselect(
+                            label=f"Select {item} to share with",
+                            options=partners,
+                            default=partners,
+                            key=f"multi_{category}_{item}"
+                        )
 
 # Display selected items
 selected_items = {
     category: {
-        item: st.session_state[f"pills_{category}"].get(item, [])
+        item: {
+            "masking": st.session_state[f"pills_{category}"][item],  # Masking choice
+            "shared_with": st.session_state[f"multi_{category}"][item]  # Selected partners
+        }
         for item, selected in st.session_state[f"selected_{category}"].items() if selected
     }
     for category in categories
 }
+
 
 st.divider() #--------------------------------------------
 st.header("Consent Storage")
@@ -148,11 +162,11 @@ def filter_and_mask_data(df, category_name):
 
 
 # Apply the filtering and masking for demographic data
-df_demo_filtered = filter_and_mask_data(df_demo, "Demographic Data")
+df_demo_filtered = filter_and_mask_data(edited_demo, "Demographic Data")
 
 # Ensure only rows where 'consent' == True in df_demo
-if "consent" in df_demo.columns:
-    df_demo_filtered = df_demo_filtered[df_demo["consent"] == True]
+if "consent" in edited_demo.columns:
+    df_demo_filtered = df_demo_filtered[edited_demo["consent"] == True]
 
 # Apply filtering for health data, linking with person_id from df_demo
 df_health_filtered = filter_and_mask_data(df_health, "Health Data")
@@ -168,3 +182,5 @@ st.dataframe(df_demo_filtered)
 
 st.write("### Filtered Health Data (End User View)")
 st.dataframe(df_health_filtered)
+
+# Add individual consent flow
