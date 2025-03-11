@@ -2,11 +2,12 @@ import pandas as pd
 import random
 from faker import Faker
 
-fake = Faker()
-Faker.seed(42)
-random.seed(42)
-
 class SampleData:
+    
+    fake = Faker()
+    Faker.seed(42)
+    random.seed(42)
+
     def __init__(self, size):
         self.size = size
         self.demo_records = []
