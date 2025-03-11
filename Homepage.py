@@ -4,6 +4,7 @@ import numpy as np
 
 from backend.data import SampleData
 
+
 st.set_page_config(
     layout="wide"
 )
@@ -17,16 +18,25 @@ def generate_synthetic_data():
     df_health = sd.df_health
     return (df_demo, df_health)
 
-st.write("Synthetic Demogrpahic Data")
-df_demo, df_health = generate_synthetic_data()
-edited_demo = st.data_editor(df_demo)
+with st.expander("Oganization 1 Data"):
+    st.write("Synthetic Demogrpahic Data")
+    df_demo, df_health = generate_synthetic_data()
+    edited_demo = st.data_editor(df_demo, key="org1_demo")
 
-st.write("Synthetic Health Data")
-st.dataframe(df_health)
+    st.write("Synthetic Health Data")
+    edited_health = st.data_editor(df_health, key="org1_health")
+
+with st.expander("Oganization 2 Data"):
+    st.write("Synthetic Demogrpahic Data")
+    df_demo, df_health = generate_synthetic_data()
+    edited_demo = st.data_editor(df_demo, key="org2_demo")
+
+    st.write("Synthetic Health Data")
+    edited_health = st.data_editor(df_health, key="org2_health")
 
 st.divider() #--------------------------------------------
 
-st.header("Organizational Consent")
+st.header("Organization 1 Consent")
 
 # Define categories and items with their pill options
 categories = {
@@ -58,9 +68,10 @@ categories = {
     }
 }
 
-partners = ["partner 1", "partner 2", "partner 3"]
+partners = ["Organization 1", "Organization 2", "partner 3"]
 
 # Initialize session state for each category
+org = ["org1" "org2"]
 for category, items in categories.items():
     if f"selected_{category}" not in st.session_state:
         st.session_state[f"selected_{category}"] = {item: False for item in items}
@@ -77,8 +88,6 @@ def toggle_select_all(category):
     st.session_state[f"select_all_{category}"] = all_selected
     for item in categories[category]:
         st.session_state[f"selected_{category}"][item] = all_selected
-
-st.write("### Select Items from Categories")
 
 for category, items in categories.items():
     with st.expander(category, expanded=False):
@@ -128,14 +137,19 @@ selected_items = {
     }
     for category in categories
 }
-
+st.divider() #--------------------------------------------
+st.header("Organization 2 Consent")
 
 st.divider() #--------------------------------------------
 st.header("Consent Storage")
-
 # Show selected items
 st.write("Organization consent values to be stored in a NoSQL db using key-value and document data model.")
-st.json(selected_items)
+cs = st.columns([0.5, 0.5])
+with cs[0]:
+    st.write("Org 1 consent record:")
+    st.json(selected_items)
+with cs[1]:
+    st.write("Org 2 consent record:")
 st.divider() #--------------------------------------------
 st.header("End User View")
 
@@ -168,18 +182,17 @@ if "consent" in edited_demo.columns:
     df_demo_filtered = df_demo_filtered[edited_demo["consent"] == True]
 
 # Apply filtering for health data, linking with person_id from df_demo
-df_health_filtered = filter_and_mask_data(df_health, "Health Data")
+df_health_filtered = filter_and_mask_data(edited_health, "Health Data")
 
-if not df_demo_filtered.empty and "person_id" in df_health_filtered.columns:
-    df_health_filtered = df_health_filtered[df_health_filtered["person_id"].isin(df_demo_filtered["person_id"])]
-else:
-    df_health_filtered = pd.DataFrame(columns=df_health.columns)  # Empty DataFrame with correct columns if no consent
+if "consent" in edited_health.columns:
+    df_health_filtered = df_health_filtered[edited_health["consent"] == True]
 
 # Display the transformed views
-st.write("### Filtered Demographic Data (End User View)")
-st.dataframe(df_demo_filtered)
+with st.expander("Oganization 1 Data"):
+    st.write("### Demographic Data (End User View)")
+    st.dataframe(df_demo_filtered)
 
-st.write("### Filtered Health Data (End User View)")
-st.dataframe(df_health_filtered)
+    st.write("### Health Data (End User View)")
+    st.dataframe(df_health_filtered)
 
 # Add individual consent flow

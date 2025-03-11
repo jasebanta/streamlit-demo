@@ -2,11 +2,11 @@ import pandas as pd
 import random
 from faker import Faker
 
+fake = Faker()
+Faker.seed()
+random.seed()
+
 class SampleData:
-    
-    fake = Faker()
-    Faker.seed(42)
-    random.seed(42)
 
     def __init__(self, size):
         self.size = size
@@ -50,6 +50,7 @@ class SampleData:
                 "bmi": round(random.uniform(18.5, 35.0), 1),
                 "smoker": random.choice(["Yes", "No", None, None]),
                 "exercise_freq": random.choice(["Daily", "Weekly", "Rarely", None]),
-                "sleep_hours": random.randint(4, 10)
+                "sleep_hours": random.randint(4, 10),
+                "consent": random.choice([True, False])
             })
         return pd.DataFrame(self.health_records) # corrected variable scope
