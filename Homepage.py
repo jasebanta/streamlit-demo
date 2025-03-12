@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import sys, os
-
+print("Current working directory:", os.getcwd())
+print("Python path:", sys.path)
 from backend.data import SampleData
 
 
