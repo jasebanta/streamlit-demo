@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import sys, os
 
-# sys.path.append(os.path.abspath(os.getcwd()))
-# print("Updated Python path:", sys.path)
+sys.path.append(os.path.abspath(os.getcwd()))
+print("Updated Python path:", sys.path)
 
 from backend.data import SampleData
 
