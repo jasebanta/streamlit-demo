@@ -133,7 +133,7 @@ categories = {
     }
 }
 
-partners = ["Colorado Access", "Denver Health", "CCHA"]
+partners = ["Colorado Access", "Denver Health", "CCHA", "Other Partners"]
 
 # Initialize session state for each category
 org = ["org1" "org2"]
