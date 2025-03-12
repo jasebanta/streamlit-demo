@@ -5,7 +5,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.getcwd()))
 print("Updated Python path:", sys.path)
 
-from backend.data import SampleData
+from .backend.data import SampleData
 
 
 st.set_page_config(
