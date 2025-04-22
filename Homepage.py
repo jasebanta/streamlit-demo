@@ -74,6 +74,19 @@ st.set_page_config(
 )
 st.title("Consent Management Visual")
 
+ga_code = """
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5KCQSGDVVY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5KCQSGDVVY');
+</script>
+"""
+st.markdown(ga_code, unsafe_allow_html=True)
+
 st.divider() #--------------------------------------------
 @st.cache_data
 def generate_synthetic_data():
