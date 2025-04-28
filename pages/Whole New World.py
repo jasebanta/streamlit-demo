@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
 GA_MEASUREMENT_ID = "G-5KCQSGDVVY"  # your GA4 measurement ID
 
@@ -15,7 +16,7 @@ GA_MEASUREMENT_ID = "G-5KCQSGDVVY"  # your GA4 measurement ID
 #     """,
 #     unsafe_allow_html=True,
 # )
-st.markdown(
+components.html(
     """
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -25,17 +26,17 @@ st.markdown(
     })(window,document,'script','dataLayer','GTM-5822N93W');</script>
     <!-- End Google Tag Manager -->
     """,
-    unsafe_allow_html=True,
+    height=0, width=0
 )
 
 st.title("Hello world!")
 
-st.markdown(
+components.html(
     """
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5822N93W"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     """,
-    unsafe_allow_html=True,
+    height=0, width=0
 )
