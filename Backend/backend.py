@@ -1,6 +1,7 @@
 
 from fastapi import FastAPI
 
+
 app = FastAPI()
 
 
@@ -8,3 +9,5 @@ app = FastAPI()
 async def read_root():
     return {"Hello": "Kynisca World"}
 
+async def send_backend_metric(event_name):
+    pass

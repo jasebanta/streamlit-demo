@@ -1,7 +1,18 @@
 import streamlit as st
-from datetime import datetime as dt
 
-st.set_page_config(
-    layout="wide"
+GA_MEASUREMENT_ID = "G-5KCQSGDVVY"  # your GA4 measurement ID
+
+# Inject the Google Analytics tracking script
+st.markdown(
+    f"""
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', '{GA_MEASUREMENT_ID}');
+    </script>
+    """,
+    unsafe_allow_html=True,
 )
-st.title("New Page")
