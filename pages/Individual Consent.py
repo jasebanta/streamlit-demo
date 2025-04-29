@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import datetime as dt
 import secrets
+import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Individual Consent",
@@ -8,18 +9,32 @@ st.set_page_config(
 )
 st.title("Individual Consent")
 
-ga_code = """
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5KCQSGDVVY"></script>
+# ga_code = """
+# <!-- Google tag (gtag.js) -->
+# <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KCQSGDVVY"></script>
+# <script>
+#   window.dataLayer = window.dataLayer || [];
+#   function gtag(){dataLayer.push(arguments);}
+#   gtag('js', new Date());
+
+#   gtag('config', 'G-5KCQSGDVVY');
+# </script>
+# """
+# st.markdown(ga_code, unsafe_allow_html=True)
+
+
+
+gtag_script = """
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0ZPWFNCRW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
-
-  gtag('config', 'G-5KCQSGDVVY');
+  gtag('config', 'G-R0ZPWFNCRW');
 </script>
 """
-st.markdown(ga_code, unsafe_allow_html=True)
+
+components.html(gtag_script, height=0, width=0)
 
 st.divider() #--------------------------------------------
 @st.dialog("Email individual")
