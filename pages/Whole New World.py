@@ -17,7 +17,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 # Render the GA script (height and width = 0 so it's invisible)
 components.html(ga4_script, height=0, width=0)
 
-st.write("Hello, whole new world!")
+st.title("Hello, whole new world!")
 
 body_script = """
 <!-- Google Tag Manager (noscript) -->
