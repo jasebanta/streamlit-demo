@@ -7,6 +7,8 @@ st.set_page_config(page_title="Streamlit with Google Analytics", layout="wide")
 st.title("📊 Streamlit App with Google Analytics")
 
 #############################################################################
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import backend.utils as GAU
 import random
 def track_login(user_id, debug:bool = False, user_properties = None):

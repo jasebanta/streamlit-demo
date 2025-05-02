@@ -36,6 +36,8 @@ st.title("Individual Consent")
 
 # components.html(gtag_script, height=0, width=0)
 #############################################################################
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import backend.utils as GAU
 import random
 def track_login(user_id, debug:bool = False, user_properties = None):
