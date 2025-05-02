@@ -79,13 +79,7 @@ if 'session_id' not in st.session_state:
     st.session_state['session_id'] = str(uuid.uuid4())
 
 #############################################################################
-import sys
-import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-custom_utils_path = os.path.join(current_dir, 'backend')
-if custom_utils_path not in sys.path:
-    sys.path.append(custom_utils_path)
-    
+
 from backend.utils import GA4, GA4Event
 def track_login(user_id, debug:bool = False):
     event = GA4Event(name="login", params={
