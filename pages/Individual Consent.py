@@ -38,8 +38,12 @@ st.title("Individual Consent")
 #############################################################################
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from ..``backend.utils import GA4, GA4Event
+current_dir = os.path.dirname(os.path.abspath(__file__))
+custom_utils_path = os.path.join(current_dir, 'backend')
+if custom_utils_path not in sys.path:
+    sys.path.append(custom_utils_path)
+    
+from backend.utils import GA4, GA4Event
 def track_login(user_id, debug:bool = False):
     event = GA4Event(name="login", params={
         "method": "username/password",
@@ -57,7 +61,7 @@ def track_page_view(user_id, page, load_time, debug:bool = False):
   )
     GA4.send_event(user_id = user_id, events = [event], user_properties = st.session_state.user_properties)
 
-track_page_view(user_id=st.session_state.email, page="Individual Consent", load_time = st.session_state.page_loadtime)
+track_page_view(user_id=st.session_state.email, page="Homepage", load_time = st.session_state.page_loadtime)
 ###############################################################################
 
 st.divider() #--------------------------------------------
