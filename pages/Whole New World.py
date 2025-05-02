@@ -74,8 +74,8 @@ st.session_state.user_properties = {
       }
 
 st.write(f"Your page load time is: {st.session_state.page_loadtime}")
-track_login(user_id=st.session_state.email, user_properties= st.session_state.user_properties, debug=True)
-track_page_view(user_id=st.session_state.email, page="Whole New World", load_time = st.session_state.page_loadtime, debug=True)
+track_login(user_id=st.session_state.email, user_properties= st.session_state.user_properties)
+track_page_view(user_id=st.session_state.email, page="Whole New World", load_time = st.session_state.page_loadtime)
 # track_data_download(user_id=st.session_state.email, user_properties = st.session_state.user_properties, debug = True)
 
 st.divider()
@@ -85,7 +85,7 @@ if st.button("Download Data"):
         user_id=st.session_state.email,
         latency_ms=lms,
         size=s,
-        user_properties=st.session_state.user_properties,
-        debug=True
+        user_properties=st.session_state.user_properties
+        # debug=True
     )
     st.write(f"latency_ms = {lms}, size = {s}.")
