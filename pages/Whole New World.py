@@ -1,6 +1,14 @@
 import streamlit as st
 
 #############################################################################
+import streamlit as st
+import os
+import sys
+
+st.write("Working dir:", os.getcwd())
+st.write("Script path:", os.path.abspath(__file__))
+st.write("sys.path:", sys.path)
+
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import backend.utils as GAU
