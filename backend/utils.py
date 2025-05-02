@@ -17,8 +17,8 @@ class GA4:
 
         payload = {
             # "client_id": f"{random.randint(1000000000,9999999999)}.{random.randint(1000000000,9999999999)}",
-            "client_id": "9147457264.7594690140",
-            # "client_id": st.session_state['session_id'],
+            # "client_id": "9147457264.7594690140",
+            "client_id": st.session_state['session_id'],
             "user_id": user_id,
             "user_properties": user_properties,
             "events": [event.model_dump() for event in events],
