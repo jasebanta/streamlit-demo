@@ -38,22 +38,22 @@ st.title("Individual Consent")
 #############################################################################
 import backend.utils as GAU
 import random
-def track_login(user_id, debug:bool = False):
+def track_login(user_id, debug:bool = False, user_properties = None):
     event = GAU.GA4Event(name="login", params={
         "method": "username/password",
         "debug_mode": debug
         }
     )
-    GAU.GA4.send_event(user_id = user_id, events = [event], user_properties = st.session_state.user_properties)
+    GAU.GA4.send_event(user_id = user_id, events = [event], user_properties = user_properties)
 
-def track_page_view(user_id, page, load_time, debug:bool = False):
+def track_page_view(user_id, page, load_time, user_properties = None, debug:bool = False):
     event = GAU.GA4Event(name="page_visit", params={
         "page_name": page,
         "page_load_time": load_time,
         "debug_mode": debug
     }
   )
-    GAU.GA4.send_event(user_id = user_id, events = [event], user_properties = st.session_state.user_properties)
+    GAU.GA4.send_event(user_id = user_id, events = [event], user_properties = user_properties)
 
 st.session_state.page_loadtime = random.randint(1,5)
 track_page_view(user_id=st.session_state.get("email") or "None", page="Individual Consent", load_time = st.session_state.page_loadtime)
