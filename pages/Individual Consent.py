@@ -39,7 +39,7 @@ st.title("Individual Consent")
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from backend.utils import GA4, GA4Event
+from ..``backend.utils import GA4, GA4Event
 def track_login(user_id, debug:bool = False):
     event = GA4Event(name="login", params={
         "method": "username/password",
