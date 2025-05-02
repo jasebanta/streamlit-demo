@@ -1,6 +1,7 @@
 /.venv
 /.conda
-*/secrets.toml
+secrets.toml
+/.streamlit
 */authenticate.py
 **/.idea
 **/.vscode

@@ -6,43 +6,26 @@ st.set_page_config(page_title="Streamlit with Google Analytics", layout="wide")
 
 st.title("📊 Streamlit App with Google Analytics")
 
-# --- Inject Google Analytics ---
+#############################################################################
+from backend.utils import GA4, GA4Event
+def track_login(user_id, debug:bool = False):
+    event = GA4Event(name="login", params={
+        "method": "username/password",
+        "debug_mode": debug
+        }
+    )
+    GA4.send_event(user_id = user_id, events = [event], user_properties = st.session_state.user_properties)
 
-# ga4_script = """
-# <!-- Google Tag Manager -->
-# <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-# new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-# j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-# 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-# })(window,document,'script','dataLayer','GTM-5822N93W');</script>
-# <!-- End Google Tag Manager -->
-# """
+def track_page_view(user_id, page, load_time, debug:bool = False):
+    event = GA4Event(name="page_visit", params={
+        "page_name": page,
+        "page_load_time": load_time,
+        "debug_mode": debug
+    }
+  )
+    GA4.send_event(user_id = user_id, events = [event], user_properties = st.session_state.user_properties)
 
-# # Render the GA script (height and width = 0 so it's invisible)
-# components.html(ga4_script, height=0, width=0)
+###############################################################################
 
-# # --- Main app content ---
-# st.write("Scroll down for more content.")
-# st.button("Click Me!")
-
-# body_script = """
-# <!-- Google Tag Manager (noscript) -->
-# <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5822N93W"
-#     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-# <!-- End Google Tag Manager (noscript) -->
-# """
-
-# # Render the GA script (height and width = 0 so it's invisible)
-# components.html(body_script, height=0, width=0)
-
-gtag_script = """
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0ZPWFNCRW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', 'G-R0ZPWFNCRW');
-</script>
-"""
-
-components.html(gtag_script, height=0, width=0)
+track_page_view(user_id=st.session_state.email, page="New World", load_time = st.session_state.page_loadtime)
+st.write(st.session_state)

@@ -24,17 +24,17 @@ st.title("Individual Consent")
 
 
 
-gtag_script = """
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0ZPWFNCRW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', 'G-R0ZPWFNCRW');
-</script>
-"""
+# gtag_script = """
+# <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0ZPWFNCRW"></script>
+# <script>
+#   window.dataLayer = window.dataLayer || [];
+#   function gtag(){{dataLayer.push(arguments);}}
+#   gtag('js', new Date());
+#   gtag('config', 'G-R0ZPWFNCRW');
+# </script>
+# """
 
-components.html(gtag_script, height=0, width=0)
+# components.html(gtag_script, height=0, width=0)
 
 st.divider() #--------------------------------------------
 @st.dialog("Email individual")
