@@ -28,7 +28,5 @@ def track_page_view(user_id, page, load_time, user_properties = None, debug:bool
   )
     GAU.GA4.send_event(user_id = user_id, events = [event], user_properties = user_properties)
 
-st.session_state.page_loadtime = random.randint(1,5)
 track_page_view(user_id=st.session_state.get("email") or "None", page="New World", load_time = st.session_state.page_loadtime)
 ###############################################################################
-st.write(st.session_state)
